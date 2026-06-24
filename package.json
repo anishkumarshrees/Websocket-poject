@@ -8,12 +8,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start":"nodemon server.ts"
+    "start": "nodemon server.ts"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
+    "mongodb": "^7.3.0",
     "mongoose": "^9.7.2",
     "ts-node": "^10.9.2",
     "typescript": "^6.0.3"

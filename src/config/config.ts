@@ -6,4 +6,4 @@ const envConfig={
     mongoConnectionString : process.env.BACKEND_URL
 }
 
-export = envConfig
+export default envConfig

@@ -1,5 +1,6 @@
-import mongoose = require("mongoose");
-import envConfig = require("./config");
+
+import mongoose from "mongoose";
+import envConfig from "./config.js";
 
 async function connectToDb(){
     try{
@@ -13,4 +14,4 @@ async function connectToDb(){
         process.exit(1)
     }
 }
-export = connectToDb
+export default connectToDb

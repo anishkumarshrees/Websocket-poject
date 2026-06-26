@@ -70,7 +70,32 @@ class Todo{
 
     
   }
-}
+  private async handleUpdtaeTodoStatus(socket:Socket,data:{id:string,status:Status}){
+    try {
+        const {id,status}=data
+      //new:true le update vae sake paxi ko data store garxa
+    const todo=  await todoModel.findByIdAndUpdate(id,{status},{new:true})
+    if(!todo){
+      socket.emit("todo_response",{
+        status:"error",
+        message:"todo not found"
+      })
+      return;
+    }
+    const todos =await todoModel.find({status:Status.Pending})
+      socket.emit("todos_updated",{
+        status:"success",
+        data:todos
+      
+    })
+      
+    } catch (error) {
+      socket.emit("todo_response",{
+            status : "error", 
+            error
+    })
+  }
+}}
 
 export default new Todo()
 

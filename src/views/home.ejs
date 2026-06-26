@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <script src="/socket.io/socket.io.js"></script>
@@ -42,6 +42,18 @@
                 console.log("error vayo hai")
             }
         })
+        
+        function addTodo(evenet){
+            event.preventDefault();
+            const taskValue = document.getElementById("newTask")
+            const task = taskValue.value
+            socket.emit("addTodo",{
+                task : task , 
+                deadLine : new Date().toLocaleDateString(), 
+                status : "Pending"
+            })
+            taskValue.value = ""
+        }
 
         function updateTodoList(todos){
             const todoList = document.getElementById("todoList")
@@ -50,7 +62,7 @@
                 const listItem = `
                 <li class="py-4 flex items-center justify-between" data-id="${todo._id}">
                 <div class="flex items-center">
-                    <input id="todo_${todo._id}" name="todo_${todo._id}" type="checkbox"
+                    <input id="todo_${todo._id}" name="todo_${todo._id}" type="checkbox" class ="cursor-pointer"
                         class="h-4 w-4 text-teal-600 focus:ring-teal-500 border-gray-300 rounded" onchange="toogleStatus('${todo._id}')" >
                     <label for="todo_${todo._id}" class="ml-3 block text-gray-900">
                         <span class="text-lg font-medium">${todo.task}</span>
@@ -58,7 +70,7 @@
                     </label>
                     
                 </div>
-                <button onclick="deleteTodo('${todo._id}')">
+                <button class="cursor-pointer" onclick="deleteTodo('${todo._id}')">
                     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></svg>
                 </button>
             </li>
@@ -67,20 +79,10 @@
             })
         }
 
-        function addTodo(){
-            const taskValue = document.getElementById("newTask")
-            const task = taskValue.value
-            socket.emit("addTodo",{
-                task : task , 
-                deadLine : new Date().toLocaleDateString(), 
-                status : "pending"
-            })
-            taskValue.value = ""
-        }
         function toogleStatus(todoId){
             socket.emit("updateTodoStatus",{
                 id : todoId, 
-                status : "completed"
+                status : "Completed"
             })
         }
         function deleteTodo(todoId){

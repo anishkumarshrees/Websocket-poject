@@ -1,20 +1,18 @@
 
 import Express = require("express");
-import ("../src/todo/todoController.js")
-const app = Express()
+const app = Express();
 import type { Request, Response } from "express";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const __views = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__views);
-app.set("views", path.join(__dirname,'views'))
-app.set("view engine","ejs")
-app.get("/",(req:Request,res:Response)=>{
-    res.render("home")
-})
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.get("/", (req: Request, res: Response) => {
+  res.render("home");
+});
 
-
-export default app
+export default app;
 
 

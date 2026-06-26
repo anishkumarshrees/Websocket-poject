@@ -1,6 +1,6 @@
 enum Status {
     Completed = 'completed',
-    Pending = 'pending'
+    Pending = 'Pending'
 }
 
 

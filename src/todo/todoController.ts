@@ -15,12 +15,13 @@ class Todo{
       console.log("new client connected")
      socket.on("addTodo",(data)=>this.handleAddTodo(socket,data))
      socket.on("deleteTodo",(data)=>this.handleDeleteTodo(socket,data))
+     socket.on("fetchTodos",(data)=>this.getPendingTodos(socket))
     })
   }
   // add garna ko lagi data haru
   private async handleAddTodo(socket:Socket,data:ITodo){
      try { const {task,deadLine,status}=data
-      const todo= await todoModel.create({
+    const todo =  await todoModel.create({
         task,
         deadLine,
         status
@@ -36,7 +37,7 @@ class Todo{
       return;
       
      } catch (error) {
-      socket.emit("todos_response",{
+    socket.emit("todo_response",{
         status:"error",
         error
       })
@@ -95,7 +96,22 @@ class Todo{
             error
     })
   }
-}}
+}
+private async getPendingTodos(socket:Socket){
+ try {
+   const todos= await todoModel.find({status:Status.Pending})
+  socket.emit("todos_updated",{
+    status:"success",
+    data:todos
+  })
+ } catch (error) {
+  socket.emit("to_reponse",{
+    status:"error",
+    error
+  })
+ }
+}
+}
 
 export default new Todo()
 
